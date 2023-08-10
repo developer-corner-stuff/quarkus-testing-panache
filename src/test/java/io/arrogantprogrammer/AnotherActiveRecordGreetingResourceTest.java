@@ -1,7 +1,6 @@
 package io.arrogantprogrammer;
 
 import io.quarkus.panache.mock.PanacheMock;
-import io.quarkus.test.Mock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,16 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
-public class AnotherGreetingResourceTest {
+public class AnotherActiveRecordGreetingResourceTest {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(AnotherGreetingResourceTest.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(AnotherActiveRecordGreetingResourceTest.class);
 
     @Test
     public void testMockingListAll() {

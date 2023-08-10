@@ -1,23 +1,25 @@
 package io.arrogantprogrammer;
 
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-@Path("/hello")
-@Produces(MediaType.TEXT_PLAIN)
-public class GreetingResource {
+@Path("/repository")
+public class RepositoryGreetingResource {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(GreetingResource.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(RepositoryGreetingResource.class);
+
+    @Inject
+    GreetingRepository greetingRepository;
 
     @GET
+    @Path("/hello")
     @Transactional
     public String hello(@QueryParam("name") final String name) {
 
@@ -25,7 +27,7 @@ public class GreetingResource {
             return "Hello!";
         }else{
             Greeting greeting = new Greeting(name);
-            greeting.persist();
+            greetingRepository.persist(greeting);
             return String.format("Hello, %s!", name);
         }
     }
@@ -34,7 +36,7 @@ public class GreetingResource {
     @Path("/all")
     public List<Greeting> hellos() {
 
-        return Greeting.listAll();
+        return greetingRepository.listAll();
     }
 
 }
