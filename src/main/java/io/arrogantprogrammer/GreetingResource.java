@@ -21,9 +21,13 @@ public class GreetingResource {
     @Transactional
     public String hello(@QueryParam("name") final String name) {
 
-        Greeting greeting = new Greeting(name);
-        greeting.persist();
-        return name == null ? "Hello!" : String.format("Hello, %s!", name);
+        if (name == null) {
+            return "Hello!";
+        }else{
+            Greeting greeting = new Greeting(name);
+            greeting.persist();
+            return String.format("Hello, %s!", name);
+        }
     }
 
     @GET
@@ -32,4 +36,5 @@ public class GreetingResource {
 
         return Greeting.listAll();
     }
+
 }
